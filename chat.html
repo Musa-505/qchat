@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    div {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    #chatMessages {
+        max-height: 300px;
+        overflow-y: visible;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        padding: 10px;
+        text-align: left;
+    }
+
+    #messageInput {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    #sendMessageBtn {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    #sendMessageBtn:hover {
+        background-color: #45a049;
+    }
+</style>
+
+
+<body>
+    <div>
+        <h2 id="chatUser"></h2>
+        <div id="chatMessages"></div>
+        <input type="text" id="messageInput" placeholder="Type your message">
+        <button id="sendMessageBtn">Send</button>
+    </div>
+    <script type="module" src="js/chat.js"></script>
+</body>
+
+</html>

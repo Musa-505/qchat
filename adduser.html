@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+</head>
+
+<body>
+    <h2>Add User</h2>
+    <form id="addUserForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Add User</button>
+    </form>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBqkJwrKxdpWkQCY9EfsDrGqoE482G1q10",
+            authDomain: "qchat-f929a.firebaseapp.com",
+            projectId: "qchat-f929a",
+            storageBucket: "qchat-f929a.appspot.com",
+            messagingSenderId: "159931077018",
+            appId: "1:159931077018:web:a2b16370a2fe42269c2a23",
+            measurementId: "G-VL53SDZTJ4"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Use Firebase Auth
+        const auth = getAuth(app);
+
+        // Use Firebase Firestore
+        const firestore = getFirestore(app);
+
+        document.getElementById("addUserForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Create user in Firebase Authentication
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log("User created:", user);
+
+                    // Add user details to Firestore with UID
+                    const usersCollection = collection(firestore, 'users');
+                    addDoc(usersCollection, {
+                        uid: user.uid,
+                        name,
+                        email
+                    })
+                        .then(() => {
+                            console.log("User details added to Firestore.");
+                        })
+                        .catch((error) => {
+                            console.error("Error adding user details to Firestore:", error);
+                        });
+                })
+                .catch((error) => {
+                    console.error("Error creating user:", error);
+                });
+        });
+    </script>
+</body>
+
+</html>
